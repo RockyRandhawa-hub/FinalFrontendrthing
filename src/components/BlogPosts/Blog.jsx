@@ -1,6 +1,10 @@
 import React from 'react';
 import Header from '../../utils/Header';
 import Navdeep from "../../assets/images/Navdeep.jpg";
+import WarMemorial from "../../assets/images/WarMemorial.jpg";
+import GunPark from "../../assets/images/GunPark.jpg";
+import Missiles from "../../assets/images/Missiles.jpg";
+
 import Footer from '../../utils/Footer';
 import { Link } from 'react-router-dom';
 
@@ -12,22 +16,23 @@ const Blog = () => {
       image: Navdeep,
       readTime: "8 min read",
       title: "Plan Your Journey Through Military's Heritage: Timings and What to Expect"
+      
     },
     {
       id: 2,
-      image: Navdeep,
+      image: WarMemorial,
       readTime: "6 min read", 
       title: "Exploring the Historic Battlefields: A Comprehensive Guide"
     },
     {
       id: 3,
-      image: Navdeep,
+      image: GunPark,
       readTime: "10 min read",
       title: "Military Museums: Preserving Our Nation's Legacy"
     },
     {
       id: 4,
-      image: Navdeep,
+      image: Missiles,
       readTime: "5 min read",
       title: "Stories of Valor: Heroic Tales from India's Military History"
     }
@@ -114,7 +119,7 @@ const Blog = () => {
               >
                 {/* Image Container */}
                 <div className="relative overflow-hidden">
-                  
+
                   <img 
                     src={post.image} 
                     alt={post.title}
