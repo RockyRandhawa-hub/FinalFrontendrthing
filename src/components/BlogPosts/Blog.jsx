@@ -49,7 +49,7 @@ const Blog = () => {
         />
         
         {/* Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/60 to-black/80" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-yellow-200 to-black/80" />
         
         {/* Text Content */}
         <div className="relative z-10 flex items-center justify-center h-full px-4">

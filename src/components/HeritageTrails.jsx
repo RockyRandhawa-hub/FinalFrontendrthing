@@ -15,7 +15,7 @@ const HeritageTrails = () => {
             
             {/* Header Section */}
             <div className='headingforHeritageTrails flex flex-row justify-center pt-12'>
-              <h1 className='text-5xl font-bold text-green-300 italic drop-shadow-2xl' style={{fontFamily:"Kaushan"}}>
+              <h1 className='text-5xl font-bold text-green-950 italic drop-shadow-2xl' style={{fontFamily:"Kaushan"}}>
                 Heritage Trails
               </h1>
             </div>
