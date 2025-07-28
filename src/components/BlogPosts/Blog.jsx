@@ -49,7 +49,7 @@ const Blog = () => {
         />
         
         {/* Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-yellow-200 to-black/80" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-blue-950 to-black/80" />
         
         {/* Text Content */}
         <div className="relative z-10 flex items-center justify-center h-full px-4">
@@ -123,7 +123,7 @@ const Blog = () => {
                   <img 
                     src={post.image} 
                     alt={post.title}
-                    className="w-full h-64 sm:h-72 object-cover group-hover:scale-105 transition-transform duration-500"
+                    className="w-full h-64 sm:h-72 object-cover group-hover:scale-105 transition-transform duration-500 "
                   />
                   {/* Overlay gradient */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
