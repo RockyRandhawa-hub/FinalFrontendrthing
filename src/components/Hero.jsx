@@ -3,8 +3,16 @@ import heroImageL from '../assets/images/heroImageL.jpg';
 import AdventureBackGround from '../assets/images/AdventureBackGround.jpg';
 import Logo from '../assets/icons/Logo.png';
 import HeritageTrails from './HeritageTrails';
+import { Link } from 'react-router-dom';
+import GunPark from '../assets/images/GunPark.jpg'
+import GunParkThree from '../assets/images/GunParkThree.jpg'
+import GunArticleFour from '../assets/images/GunArticleFour.jpg'
+import combinedguns from '../assets/images/combinedguns.jpg'
+
+import Stick from '../assets/images/Stick.jpg'
 
 const Hero = () => {
+  const arr= [Stick , GunPark ,GunParkThree,combinedguns]
   return (
     <>
       {/* WRAPPER: Unifying background for smooth transitions */}
@@ -29,9 +37,11 @@ const Hero = () => {
               <p className="text-lg md:text-2xl mb-8" style={{ fontFamily: "Montserrat" }}>
                 Book, explore, and honor India's military heritage — digitally.
               </p>
-              <button className="bg-white text-gray-800 rounded-full text-lg font-bold hover:bg-gray-100 transition-colors px-8 py-2">
+              <Link to="/EnterEmail">
+              <button className="bg-white text-gray-800 rounded-full text-lg font-bold hover:bg-gray-100 transition-colors px-8 py-2 cursor-pointer" >
                 Explore Destinations
               </button>
+              </Link>
             </div>
           </div>
         </div>
@@ -52,12 +62,12 @@ const Hero = () => {
             {/* Attraction Images */}
            <div className="flex flex-wrap md:flex-nowrap justify-center gap-14">
 
-              {[1, 2, 3, 4].map((_, idx) => (
+              {arr.map((img, idx) => (
                 <div
                   key={idx}
-                  className="w-full sm:w-[392px] h-[313px] rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300"
+                  className="w-full sm:w-[392px] h-[313px] rounded-lg overflow-hidden shadow-lg hover:shadow-2xl shadow-red-900/100  transition-shadow duration-300"
                 >
-                  <img src={heroImageL} alt={`Attraction ${idx + 1}`} className="w-full h-full object-cover brightness-90" />
+                  <img src={img} alt={`Attraction ${idx + 1}`} className="w-full h-full object-cover brightness-90" />
                 </div>
               ))}
             </div>
@@ -83,10 +93,10 @@ const Hero = () => {
                   key={item}
                   className="w-full sm:w-[256px] h-[294px] border border-black rounded-3xl hover:shadow-2xl transition-shadow duration-300 shadow-black hover:shadow-black/80 overflow-hidden flex items-center justify-center bg-white/30 text-black text-center"
                 >
-                  {item === 0 ? (
+                 {item === 0 ? (
                     <img src={Logo} alt="Logo" className="h-20" />
                   ) : (
-                    <span className="text-lg font-semibold">Coming Soon</span>
+                    <img src={Logo} alt="Logo" className="h-20" />
                   )}
                 </div>
               ))}
