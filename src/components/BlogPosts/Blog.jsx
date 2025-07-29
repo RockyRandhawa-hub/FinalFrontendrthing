@@ -147,12 +147,12 @@ const Blog = () => {
                   </h3>
                   
                   {/* Read more button */}
-                  <button className="inline-flex items-center text-amber-600 font-medium hover:text-amber-700 transition-colors duration-200">
+                  {/* <button className="inline-flex items-center text-amber-600 font-medium hover:text-amber-700 transition-colors duration-200">
                     Read More 
                     <svg className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>
-                  </button>
+                  </button> */}
                 </div>
               </div>
             ))}

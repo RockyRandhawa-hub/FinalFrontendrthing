@@ -28,7 +28,7 @@ export default function App() {
             <Route path="BookingForm" element={<BookingForm />} />
           </Route>
         </Route>
-
+        
         <Route path="heritage/admin/login/protected" element={<AdminLogin />} />
         <Route path="heritage/admin/login/protected/adminPannel" element={<AdminPanel />} />
 
