@@ -1,6 +1,7 @@
 import React from 'react'
 import MapMp from "../assets/images/MapMp.png"
 import Logo from "../assets/icons/Logo.png"
+import { Link } from 'react-router-dom'
 
 const HeritageTrails = () => {
   return (
@@ -14,7 +15,7 @@ const HeritageTrails = () => {
             
             {/* Header Section */}
             <div className='headingforHeritageTrails flex flex-row justify-center pt-12'>
-              <h1 className='text-5xl font-bold text-green-300 italic drop-shadow-2xl' style={{fontFamily:"Kaushan"}}>
+              <h1 className='text-5xl font-bold text-green-950 italic drop-shadow-2xl' style={{fontFamily:"Kaushan"}}>
                 Heritage Trails
               </h1>
             </div>
@@ -29,12 +30,13 @@ const HeritageTrails = () => {
             {/* Cards Section */}
             <div className='theFOurCardsDesignforTheTourComponens w-full mt-12'>
               <div className='flex flex-row justify-center items-center gap-6 flex-wrap px-4'>
-                <div className='w-[256px] h-[294px] bg-white/20 backdrop-blur-md border-2 border-white/30 rounded-3xl hover:shadow-2xl hover:bg-white/30 transition-all duration-300 shadow-xl hover:shadow-black/60 overflow-hidden relative group hover:scale-105'> 
-                  <img src={Logo} alt="" className='w-full h-full object-cover group-hover:scale-110 transition-transform duration-300' />
-                  <div className='absolute inset-0 bg-gradient-to-t from-black/70 to-transparent'></div>
-                  <div className='absolute bottom-4 left-4 text-white'>
-                    <h3 className='font-bold text-xl drop-shadow-lg'>Ancient Temples</h3>
-                    <p className='text-sm opacity-90 drop-shadow-md'>Sacred Heritage Sites</p>
+                 <div className='w-[256px] h-[294px] bg-white/20 backdrop-blur-md border-2 border-white/30 rounded-3xl hover:shadow-2xl hover:bg-white/30 transition-all duration-300 shadow-xl hover:shadow-black/60 overflow-hidden relative group hover:scale-105'>
+                  <div className='w-full h-full bg-gradient-to-br from-purple-500/60 to-green-950 flex items-center justify-center'>
+                    <div className='text-center text-white'>
+                      <div className='text-5xl mb-4 drop-shadow-lg'>🛕</div>
+                      <h3 className='font-bold text-xl drop-shadow-lg'>Ancient Temples</h3>
+                      <p className='text-sm opacity-90 drop-shadow-md'>Sacred stone silence</p>
+                    </div>
                   </div>
                 </div>
                 
@@ -92,12 +94,14 @@ const HeritageTrails = () => {
 
             {/* CTA Button */}
             <div className='flex flex-row justify-center mt-12 pb-16'>
+              <Link to="/EnterEmail">
               <button 
                 style={{padding:"15px 40px", fontFamily:"Roboto"}}   
                 className="bg-green-500 hover:bg-green-600 text-white rounded-full text-xl font-bold transition-all duration-300 shadow-2xl hover:shadow-green-500/30 hover:scale-110 border-2 border-green-300 drop-shadow-xl"
               >
                 Discover More Trails
               </button>
+              </Link>
             </div>
 
             {/* Decorative Elements */}

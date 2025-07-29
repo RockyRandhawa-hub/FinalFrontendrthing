@@ -3,8 +3,52 @@ import heroImageL from '../assets/images/heroImageL.jpg';
 import AdventureBackGround from '../assets/images/AdventureBackGround.jpg';
 import Logo from '../assets/icons/Logo.png';
 import HeritageTrails from './HeritageTrails';
+import { Link } from 'react-router-dom';
+import GunPark from '../assets/images/GunPark.jpg'
+import GunParkThree from '../assets/images/GunParkThree.jpg'
+import GunArticleFour from '../assets/images/GunArticleFour.jpg'
+import combinedguns from '../assets/images/combinedguns.jpg'
+import Navdeep from '../assets/images/Navdeep.jpg'
+import WarMemorial from '../assets/images/WarMemorial.jpg'
+import Missiles from '../assets/images/Missiles.jpg'
+
+
+
+import Stick from '../assets/images/Stick.jpg'
 
 const Hero = () => {
+  const arr= [Stick , GunPark ,GunParkThree,combinedguns]
+   const blogPosts = [
+      {
+        id: 1,
+        image: Navdeep,
+        readTime: "8 min read",
+        title: "Plan Your Journey Through Military's Heritage: Timings and What to Expect",
+        href: "/blogs"
+        
+      },
+      {
+        id: 2,
+        image: WarMemorial,
+        readTime: "6 min read", 
+        title: "Exploring the Historic Battlefields: A Comprehensive Guide",
+        href: "/blogs"
+      },
+      {
+        id: 3,
+        image: GunPark,
+        readTime: "10 min read",
+        title: "Military Museums: Preserving Our Nation's Legacy",
+        href:"/blogs"
+      },
+      {
+        id: 4,
+        image: Missiles,
+        readTime: "5 min read",
+        title: "Stories of Valor: Heroic Tales from India's Military History",
+        href: "/blogs"
+      }
+    ];
   return (
     <>
       {/* WRAPPER: Unifying background for smooth transitions */}
@@ -29,9 +73,11 @@ const Hero = () => {
               <p className="text-lg md:text-2xl mb-8" style={{ fontFamily: "Montserrat" }}>
                 Book, explore, and honor India's military heritage — digitally.
               </p>
-              <button className="bg-white text-gray-800 rounded-full text-lg font-bold hover:bg-gray-100 transition-colors px-8 py-2">
+              <Link to="/EnterEmail">
+              <button className="bg-white text-gray-800 rounded-full text-lg font-bold hover:bg-gray-100 transition-colors px-8 py-2 cursor-pointer" >
                 Explore Destinations
               </button>
+              </Link>
             </div>
           </div>
         </div>
@@ -52,12 +98,12 @@ const Hero = () => {
             {/* Attraction Images */}
            <div className="flex flex-wrap md:flex-nowrap justify-center gap-14">
 
-              {[1, 2, 3, 4].map((_, idx) => (
+              {arr.map((img, idx) => (
                 <div
                   key={idx}
-                  className="w-full sm:w-[392px] h-[313px] rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300"
+                  className="w-full sm:w-[392px] h-[313px] rounded-lg overflow-hidden shadow-lg hover:shadow-2xl shadow-red-900/100  transition-shadow duration-300"
                 >
-                  <img src={heroImageL} alt={`Attraction ${idx + 1}`} className="w-full h-full object-cover brightness-90" />
+                  <img src={img} alt={`Attraction ${idx + 1}`} className="w-full h-full object-cover brightness-90" />
                 </div>
               ))}
             </div>
@@ -76,21 +122,44 @@ const Hero = () => {
               <span>Journey through courage and heritage</span>
               <div className="h-px w-5 bg-black" />
             </div>
-
-            <div className="flex flex-wrap justify-center items-center gap-6">
-              {[0, 1, 2, 3].map((item) => (
-                <div
-                  key={item}
-                  className="w-full sm:w-[256px] h-[294px] border border-black rounded-3xl hover:shadow-2xl transition-shadow duration-300 shadow-black hover:shadow-black/80 overflow-hidden flex items-center justify-center bg-white/30 text-black text-center"
-                >
-                  {item === 0 ? (
-                    <img src={Logo} alt="Logo" className="h-20" />
-                  ) : (
-                    <span className="text-lg font-semibold">Coming Soon</span>
-                  )}
-                </div>
-              ))}
-            </div>
+            
+<div className="flex flex-wrap justify-center items-center gap-6">
+  {blogPosts.map((item) => (
+    <Link to={`${item.href}`} key={item.id}>
+      <div className="relative w-full sm:w-[256px] h-[294px] border border-gray-300 rounded-3xl hover:shadow-2xl transition-all duration-300 shadow-lg hover:shadow-black/50 overflow-hidden bg-white group cursor-pointer">
+        
+        {/* Background Image */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center transition-transform duration-300 group-hover:scale-105"
+          style={{ backgroundImage: `url(${item.image})` }}
+        />
+        
+        {/* Dark Overlay */}
+        <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-all duration-300" />
+        
+        {/* Content Overlay */}
+        <div className="absolute inset-0 flex flex-col justify-between p-4 text-white">
+          
+          {/* Read Time Badge */}
+          <div className="flex justify-start">
+            <span className="inline-flex items-center bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-medium">
+              <div className="w-2 h-2 bg-white rounded-full mr-2"></div>
+              {item.readTime}
+            </span>
+          </div>
+          
+          {/* Title at Bottom */}
+          <div className="text-left">
+            <h3 className="text-white font-semibold text-lg leading-tight line-clamp-3">
+              {item.title}
+            </h3>
+          </div>
+          
+        </div>
+      </div>
+    </Link>
+  ))}
+</div>
 
             <div className="flex justify-center mt-12">
               <button className="bg-green-600 text-white rounded-full text-lg font-bold hover:bg-black transition-colors px-8 py-2">

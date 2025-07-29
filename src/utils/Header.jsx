@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Logo from '../assets/icons/Logo.png';
+import { Link } from 'react-router-dom';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -9,12 +10,12 @@ const Header = () => {
   };
 
   const menuItems = [
-    { name: 'Home', href: '#home' },
-    { name: 'Destination', href: '#destination' },
+    { name: 'Home', href: '/' },
+    { name: 'Blog', href: '/blogs' },
     { name: 'Experiences', href: '#experiences' },
-    { name: 'Plan your Trip', href: '#plan' }
+    { name: 'Plan your Trip', href: '/EnterEmail' }
   ];
-
+    
   return (
     <header className='flex justify-between items-center absolute top-0 left-0 w-full z-50 bg-opacity-100 px-4 sm:px-6 lg:px-8 py-4'>
       
@@ -33,8 +34,9 @@ const Header = () => {
           <div 
             key={index}
             className='text-white hover:text-gray-300 cursor-pointer transition-colors duration-200 font-medium'
-          > 
-            {item.name}
+          > <Link to={`${item.href}`} >
+            {item.name} 
+            </Link>
           </div>
         ))}
       </div>
