@@ -10,11 +10,13 @@ import BookingOne from './utils/BookineOne.jsx'
 import BookingDetails from './components/Protected/BookingDetails.jsx'
 import { Toaster } from 'react-hot-toast'
 import BookingForm from './components/Protected/BookingForm.jsx'
+import AdminLogin from './components/Admin/AdminLogin.jsx'
+import  AdminPanel from './components/Admin/AdminPanel.jsx'
 
 export default function App() {
   return (
     <>
-      <Toaster toastOptions position="top-right" />
+      <Toaster position="top-right" />
       <Header />
 
       <Routes>
@@ -26,6 +28,9 @@ export default function App() {
             <Route path="BookingForm" element={<BookingForm />} />
           </Route>
         </Route>
+
+        <Route path="heritage/admin/login/protected" element={<AdminLogin />} />
+        <Route path="heritage/admin/login/protected/adminPannel" element={<AdminPanel />} />
 
 
         {/* aur bhi route yahan aa sakte hain */}
