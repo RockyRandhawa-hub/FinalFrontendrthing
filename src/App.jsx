@@ -12,6 +12,7 @@ import { Toaster } from 'react-hot-toast'
 import BookingForm from './components/Protected/BookingForm.jsx'
 import AdminLogin from './components/Admin/AdminLogin.jsx'
 import  AdminPanel from './components/Admin/AdminPanel.jsx'
+import { BookNow } from './components/BookNow.jsx'
 
 export default function App() {
   return (
@@ -21,6 +22,8 @@ export default function App() {
 
       <Routes>
         <Route path="/" element={<Hero />} />
+        <Route path="/booknow" element={<BookNow/>} />
+
         <Route path="/blogs" element={<Blog />} />
 
         <Route path="/EnterEmail" element={<BookingOne />}>
