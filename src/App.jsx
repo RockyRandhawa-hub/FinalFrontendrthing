@@ -1,59 +1,56 @@
 
-import React from 'react'
-import './App.css'
-import Hero from './components/Hero'
-import Footer from './utils/Footer'
-import { Route, Routes } from 'react-router-dom'
-import Header from './utils/Header'
-import Blog from './components/BlogPosts/Blog'
-import BookingOne from './utils/BookineOne.jsx'
-import BookingDetails from './components/Protected/BookingDetails.jsx'
-import { Toaster } from 'react-hot-toast'
-import BookingForm from './components/Protected/BookingForm.jsx'
-import AdminLogin from './components/Admin/AdminLogin.jsx'
-import  AdminPanel from './components/Admin/AdminPanel.jsx'
-import { BookNow } from './components/BookNow.jsx'
+  import React from 'react'
+  import './App.css'
+  import Hero from './components/Hero'
+  import Footer from './utils/Footer'
+  import { Route, Routes } from 'react-router-dom'
+  import Header from './utils/Header'
+  import Blog from './components/BlogPosts/Blog'
+  import BookingOne from './utils/BookineOne.jsx'
+  import BookingDetails from './components/Protected/BookingDetails.jsx'
+  import { Toaster } from 'react-hot-toast'
+  import BookingForm from './components/Protected/BookingForm.jsx'
+  import AdminLogin from './components/Admin/AdminLogin.jsx'
+  import  AdminPanel from './components/Admin/AdminPanel.jsx'
+import {BookNow} from "./components/BookNow.jsx"
+  export default function App() {
+    return (
+      <>
+        <Toaster position="top-right" />
+        <Header />
 
-export default function App() {
-  return (
-    <>
-      <Toaster position="top-right" />
-      <Header />
-
-      <Routes>
-        <Route path="/" element={<Hero />} />
-        <Route path="/booknow" element={<BookNow/>} />
-
-        <Route path="/blogs" element={<Blog />} />
-
-        <Route path="/EnterEmail" element={<BookingOne />}>
-          <Route path="BookingDetails" element={<BookingDetails />} >
-            <Route path="BookingForm" element={<BookingForm />} />
+        <Routes>
+          <Route path="/" element={<Hero />} />
+          <Route path="/blogs" element={<Blog />} />
+          <Route path="/booknow" element={<BookNow />} />
+          <Route path="/EnterEmail" element={<BookingOne />}>
+            <Route path="BookingDetails" element={<BookingDetails />} >
+              <Route path="BookingForm" element={<BookingForm />} />
+            </Route>
           </Route>
-        </Route>
-        
-        <Route path="heritage/admin/login/protected" element={<AdminLogin />} />
-        <Route path="heritage/admin/login/protected/adminPannel" element={<AdminPanel />} />
+          
+          <Route path="heritage/admin/login/protected" element={<AdminLogin />} />
+          <Route path="heritage/admin/login/protected/adminPannel" element={<AdminPanel />} />
 
 
-        {/* aur bhi route yahan aa sakte hain */}
-      </Routes>
+          {/* aur bhi route yahan aa sakte hain */}
+        </Routes>
 
-      <Footer />
-    </>
-  );
-}
+        <Footer />
+      </>
+    );
+  }
 
 
 
-//   return (
-//   <>
-// {/* <div className='mt-[110px]'></div> */}
-//     <Header  />
-//       <Hero  />
+  //   return (
+  //   <>
+  // {/* <div className='mt-[110px]'></div> */}
+  //     <Header  />
+  //       <Hero  />
 
-//       <Footer />
-//   </>
-//   )
-// }
+  //       <Footer />
+  //   </>
+  //   )
+  // }
 

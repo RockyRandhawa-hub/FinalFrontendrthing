@@ -45,14 +45,16 @@ const AdminLogin = () => {
 
     try {
         
-      const response = await axios.post('http://localhost:8080/api/v1/admin/loginAdmin', {
+      const response = await axios.post('https://royanheritage.onrender.com/api/v1/admin/loginAdmin', {
         email: credentials.username,
         password: credentials.password
       },{withCredentials:true});
 
+        console.log(response);
+        
       if (response.status === 201) {
         // Assuming your backend returns a token and user info
-        const { token, user } = response.data;
+        const  token = response?.data?.data?.token;
 
         // Save token to localStorage for persistent login
         localStorage.setItem('adminToken', token);
@@ -200,13 +202,7 @@ const AdminLogin = () => {
         </div>
 
         {/* Demo Credentials */}
-        <div className="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
-          <h3 className="text-sm font-medium text-blue-900 mb-2">Demo Credentials:</h3>
-          <div className="text-sm text-blue-700 space-y-1">
-            <p><strong>Email:</strong> admin@example.com</p>
-            <p><strong>Password:</strong> admin123</p>
-          </div>
-        </div>
+       
       </div>
     </div>
   );

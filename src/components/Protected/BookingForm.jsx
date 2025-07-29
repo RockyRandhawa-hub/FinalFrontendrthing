@@ -381,7 +381,7 @@ function BookingForm() {
       
     } catch (error) {
       console.error('Order creation error:', error);
-      alert('Failed to create order. Please try again.');
+      alert('No seats available for your selected slot Plz try selecting next slot.');
     }
   };
 

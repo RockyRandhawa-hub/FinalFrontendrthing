@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { toast, Toaster } from 'react-hot-toast'
+import { toast } from 'react-hot-toast'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import heroImage from '../../assets/images/heroImage.jpg'
 import axios from 'axios'
@@ -37,13 +37,9 @@ const BookingDetails = () => {
     }
   }
 
-  const handleResendOtp = () => {
-    toast("Resend OTP clicked") // Hook this to resend OTP endpoint if you have one
-  }
 
 return (
   <div>
-    <Toaster />
     {!isOnBookingForm ? (
       <div className="relative z-20 flex justify-center items-start px-4 py-8 min-h-[calc(100vh-160px)]">
         <div className="w-full max-w-sm sm:max-w-md lg:max-w-lg bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl shadow-2xl text-white p-4 sm:p-6 lg:p-7 mt-4 sm:mt-8 lg:mt-12">
@@ -76,20 +72,20 @@ return (
             Verify OTP
           </button>
 
-          <div className="flex justify-center mt-4">
+          {/* <div className="flex justify-center mt-4">
             <button
               type="button"
-              className="w-full sm:w-1/3 relative right-[150px] px-4 sm:px-6 py-2 bg-gradient-to-r from-orange-600 to-green-500 hover:from-orange-400 hover:to-green-600 text-white font-medium rounded-lg transition-all duration-300 shadow-md hover:shadow-lg text-xs sm:text-sm "
+              className="w-full relative left-[1%] sm:w-1/2 relative right-[150px] px-4 sm:px-6 py-2 bg-gradient-to-r from-orange-600 to-green-500 hover:from-orange-400 hover:to-green-600 text-white font-medium rounded-lg transition-all duration-300 shadow-md hover:shadow-lg text-xs sm:text-sm "
               onClick={handleResendOtp}
             >
               Resend OTP
             </button>
-          </div>
+          </div> */}
 
           <p className="text-xs mt-3 sm:mt-4 text-center text-gray-300">
             We'll never share your email with anyone else.
           </p>
-        </div>
+        </div>a
       </div>
     ) : (
       <Outlet />

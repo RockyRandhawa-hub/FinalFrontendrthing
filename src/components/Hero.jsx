@@ -65,12 +65,12 @@ const Hero = () => {
             className="w-full h-full object-cover brightness-50"
           />
 
-          <div className="absolute inset-0 flex items-center justify-center text-center px-4">
+<div className="absolute inset-0 bg-gradient-to-b from-black/40 via-yellow-950 to-red/80 flex items-center justify-center text-center px-4">
             <div>
               <h1 className="text-4xl md:text-6xl font-bold mb-4 italic" style={{ fontFamily: "Kaushan" }}>
                 March into Madhya Pradesh!
               </h1>
-              <p className="text-lg md:text-2xl mb-8" style={{ fontFamily: "Montserrat" }}>
+              <p className="text-lg md:text-2xl mb-8 text-amber-400" style={{ fontFamily: "Montserrat" }}>
                 Book, explore, and honor India's military heritage — digitally.
               </p>
               <Link to="/EnterEmail">
@@ -117,13 +117,13 @@ const Hero = () => {
               About the Tour
             </h2>
 
-            <div className="flex justify-center items-center gap-2 mb-12 text-black" style={{ fontFamily: "Montserrat" }}>
+            <div className="w-full sm:flex justify-center items-center gap-2 mb-12 text-black" style={{ fontFamily: "Montserrat" }}>
               <div className="h-px w-5 bg-black" />
               <span>Journey through courage and heritage</span>
               <div className="h-px w-5 bg-black" />
             </div>
             
-<div className="flex flex-wrap justify-center items-center gap-6">
+<div className=" w-full sm:flex flex-wrap justify-center items-center gap-6">
   {blogPosts.map((item) => (
     <Link to={`${item.href}`} key={item.id}>
       <div className="relative w-full sm:w-[256px] h-[294px] border border-gray-300 rounded-3xl hover:shadow-2xl transition-all duration-300 shadow-lg hover:shadow-black/50 overflow-hidden bg-white group cursor-pointer">
@@ -171,7 +171,7 @@ const Hero = () => {
 
         {/* HERITAGE TRAILS SECTION */}
         <div className="-mt-16">
-          <HeritageTrails />
+          {/* <HeritageTrails /> */}
         </div>
       </div>
     </>

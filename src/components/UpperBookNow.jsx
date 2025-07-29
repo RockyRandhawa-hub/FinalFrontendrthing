@@ -20,7 +20,7 @@ return      (<div className="relative w-full h-[100vh]">
         ></div>
  
         {/* Dark Overlay */}
-        <div className="absolute inset-0 bg-black opacity-60"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-green-950 to-red/80  bg-black opacity-60"></div>
  
         {/* Text Content */}
         <div className="relative z-10 flex items-center justify-center h-full ">

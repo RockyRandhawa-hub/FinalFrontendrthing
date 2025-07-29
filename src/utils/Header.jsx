@@ -12,7 +12,7 @@ const Header = () => {
   const menuItems = [
     { name: 'Home', href: '/' },
     { name: 'Blog', href: '/blogs' },
-    { name: 'Experiences', href: '#experiences' },
+    { name: 'About-us', href: '/booknow' },
     { name: 'Plan your Trip', href: '/EnterEmail' }
   ];
     
