@@ -45,7 +45,7 @@ const BookingOne = () => {
     }
     
     setIsLoading(true);
-    
+    // https://royanheritage.onrender.com
     try {
       const res = await axios.post(`https://royanheritage.onrender.com/api/v1/verify/generateOtp`, { email: email.trim() }, { withCredentials: true });
       console.log(res);

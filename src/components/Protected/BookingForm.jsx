@@ -19,13 +19,15 @@ function BookingForm() {
   const [tickets, setTickets] = useState([]);
   const [paymentData, setPaymentData] = useState(null);
   const [dateError, setDateError] = useState('');
+  const [processing, setProcessing] = useState(false); // For post-payment processing
+  const [preparingPayment, setPreparingPayment] = useState(false); // NEW: For pre-payment loading
 
-  // Check if date is Tuesday (2), Thursday (4), or Sunday (0)
+  // Check if date is Tuesday (2), Saturday (6), or Sunday (0)
   const isValidDay = (dateString) => {
-    if (!dateString) return true; // Allow empty date initially
+    if (!dateString) return true;
     const selectedDate = new Date(dateString + 'T00:00:00');
     const dayOfWeek = selectedDate.getDay();
-    return [0, 2, 4].includes(dayOfWeek); // Sunday=0, Tuesday=2, Thursday=4
+    return [0, 2, 6].includes(dayOfWeek);
   };
 
   const handleMainPassengerChange = (field, value) => {
@@ -33,8 +35,8 @@ function BookingForm() {
       if (value && !isValidDay(value)) {
         const selectedDate = new Date(value + 'T00:00:00');
         const dayName = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][selectedDate.getDay()];
-        setDateError(`Please select a Tuesday, Thursday, or Sunday only. You selected ${dayName}.`);
-        return; // Don't update the date if it's invalid
+        setDateError(`Please select a Tuesday, Saturday, or Sunday only. You selected ${dayName}.`);
+        return;
       } else {
         setDateError('');
       }
@@ -65,7 +67,6 @@ function BookingForm() {
 
   const nextStep = () => {
     if (step === 1 && mainPassenger.name && mainPassenger.age && mainPassenger.date && mainPassenger.phone && mainPassenger.email) {
-      // Initialize co-passengers based on ticket count
       const initialCoPassengers = Array(ticketCount - 1).fill(null).map(() => ({
         name: '',
         age: '',
@@ -80,15 +81,8 @@ function BookingForm() {
     return new Promise((resolve) => {
       const script = document.createElement('script');
       script.src = 'https://checkout.razorpay.com/v1/checkout.js';
-
-      script.onload = () => {
-        resolve(true);
-      };
-
-      script.onerror = () => {
-        resolve(false);
-      };
-
+      script.onload = () => resolve(true);
+      script.onerror = () => resolve(false);
       document.body.appendChild(script);
     });
   };
@@ -97,15 +91,8 @@ function BookingForm() {
     return new Promise((resolve) => {
       const script = document.createElement('script');
       script.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
-
-      script.onload = () => {
-        resolve(true);
-      };
-
-      script.onerror = () => {
-        resolve(false);
-      };
-
+      script.onload = () => resolve(true);
+      script.onerror = () => resolve(false);
       document.body.appendChild(script);
     });
   };
@@ -113,12 +100,10 @@ function BookingForm() {
   const downloadTicket = async () => {
     try {
       const scriptLoaded = await loadJsPDF();
-
       if (!scriptLoaded) {
         alert('Failed to load PDF generator. Please try again.');
         return;
       }
-
       const { jsPDF } = window.jspdf;
       const doc = new jsPDF();
 
@@ -184,10 +169,7 @@ function BookingForm() {
         serial++;
       };
 
-      // Add main passenger
       addRow(mainPassenger);
-
-      // Add co-passengers
       coPassengers.forEach(addRow);
 
       // === TOTAL AMOUNT ===
@@ -214,16 +196,15 @@ function BookingForm() {
       // Draw green circle
       doc.setDrawColor(0, 128, 0);
       doc.setFillColor(0, 200, 0);
-      doc.circle(circleX, circleY, radius, 'FD'); // 'FD' = fill and stroke
+      doc.circle(circleX, circleY, radius, 'FD');
 
-      // Add text inside the circle
+      // Add text inside circle
       doc.setTextColor(255, 255, 255);
       doc.setFontSize(6);
       doc.text('VERIFIED', circleX, circleY - 1.5, { align: 'center' });
       doc.text('BY MCME', circleX, circleY + 3.5, { align: 'center' });
 
       doc.save(`Heritage_Walk_Ticket_${mainPassenger.name.replace(/\s+/g, '_')}.pdf`);
-
     } catch (err) {
       console.error('PDF generation failed:', err);
       alert('Failed to generate PDF.');
@@ -231,11 +212,12 @@ function BookingForm() {
   };
 
   const handleClickverificationforTIcketOrder = async () => {
+    // START: Show pre-payment loader
+    setPreparingPayment(true);
+
     try {
-      // Populate tickets array
       const ticketsArray = [];
-      
-      // Add primary passenger as first object
+
       ticketsArray.push({
         name: mainPassenger.name,
         age: mainPassenger.age,
@@ -246,103 +228,81 @@ function BookingForm() {
         email: mainPassenger.email,
         passengerType: 'primary'
       });
-      
-      // Add co-passengers as subsequent objects
+
       coPassengers.forEach((coPassenger, index) => {
         ticketsArray.push({
           name: coPassenger.name,
           age: coPassenger.age,
           army: coPassenger.isArmy === 'true',
-          date: mainPassenger.date, // Same date as primary passenger
-          slot: mainPassenger.slot, // Same slot as primary passenger
-          phone: mainPassenger.phone, // Same phone as primary passenger
-          email: mainPassenger.email, // Same email as primary passenger
+          date: mainPassenger.date,
+          slot: mainPassenger.slot,
+          phone: mainPassenger.phone,
+          email: mainPassenger.email,
           passengerType: 'co-passenger',
           passengerNumber: index + 2
         });
       });
-      
+
       setTickets(ticketsArray);
       console.log('Tickets array populated:', ticketsArray);
 
-      // Create order - Simulated API call (replace with your actual API endpoint)
       const res = await axios.post(`https://royanheritage.onrender.com/api/v1/payment/createorder`, {
         tickets: ticketsArray
       }, { withCredentials: true });
-      
-      // // For demo: simulate API response
-      // const res = {
-      //   data: {
-      //     data: {
-      //       orderId: 'demo_order_' + Date.now(),
-      //       amount: fareDetails.total * 100, // Convert to paise
-      //       currency: 'INR',
-      //       key: 'demo_key'
-      //     }
-      //   }
-      // };
-      
+
       console.log('Order created:', res.data);
 
-      // Load Razorpay script
       const scriptLoaded = await loadRazorpayScript();
-      
       if (!scriptLoaded) {
+        setPreparingPayment(false); // STOP loader on error
         alert('Failed to load payment gateway. Please try again.');
         return;
       }
 
-      // Initialize Razorpay payment
       const { orderId, amount, currency, key } = res.data.data;
-      
+
+      // STOP: Hide pre-payment loader before opening Razorpay
+      setPreparingPayment(false);
+
       const options = {
-        key: key, // Razorpay key from backend
-        amount: amount, // Amount in paise
-        currency: currency,
+        key,
+        amount,
+        currency,
         name: 'Heritage Walk Express',
         description: `Train Booking - ${ticketsArray.length} Ticket${ticketsArray.length > 1 ? 's' : ''}`,
         order_id: orderId,
         handler: async function (response) {
-          // Payment successful - this only runs when payment is completed
           console.log('✅ Payment successful, starting verification:', response);
-          
+
+          setProcessing(true); // START post-payment processing loader
+
           try {
             console.log('🔄 Sending verification request to backend...');
-            
-            // Verify payment on backend - Simulated API call
+
             const verifyRes = await axios.post(`https://royanheritage.onrender.com/api/v1/payment/verify`, {
               razorpay_order_id: response.razorpay_order_id,
               razorpay_payment_id: response.razorpay_payment_id,
               razorpay_signature: response.razorpay_signature
             }, { withCredentials: true });
-            
-            // For demo: simulate verification response
-            // const verifyRes = {
-            //   data: {
-            //     success: true,
-            //     data: {
-            //       paymentId: response.razorpay_payment_id,
-            //       orderId: response.razorpay_order_id,
-            //       status: 'completed'
-            //     }
-            //   },
-            //   status: 200
-            // };
-            
+
             console.log('✅ Verification response:', verifyRes.data);
-            
+
             if (verifyRes.data.success || verifyRes.status === 200) {
-              // Store payment data for confirmation page
               setPaymentData(verifyRes.data.data || verifyRes.data);
-              
-              // Move to step 3 (confirmation page)
-              setStep(3);
-              alert('Payment successful! Your tickets have been booked.');
+
+              // Optional small delay for better UX
+              setTimeout(() => {
+                setProcessing(false); // STOP post-payment processing loader
+                setStep(3);
+                alert('Payment successful! Your tickets have been booked.');
+              }, 2000);
             } else {
+              setProcessing(false);
               console.error('❌ Verification failed:', verifyRes.data);
               alert('Payment verification failed. Please contact support with your payment ID: ' + response.razorpay_payment_id);
             }
           } catch (error) {
+            setProcessing(false);
             console.error('❌ Payment verification error:', error);
             console.error('Error details:', error.response?.data);
             alert('Payment verification failed. Please contact support with your payment ID: ' + response.razorpay_payment_id);
@@ -362,7 +322,7 @@ function BookingForm() {
           color: '#2563eb'
         },
         modal: {
-          ondismiss: function() {
+          ondismiss: function () {
             console.log('❌ Payment cancelled/dismissed by user');
             alert('Payment cancelled. You can try again anytime.');
           }
@@ -370,18 +330,19 @@ function BookingForm() {
       };
 
       const rzp = new window.Razorpay(options);
-      
+
       rzp.on('payment.failed', function (response) {
         console.error('❌ Payment failed:', response.error);
         console.error('Payment failure details:', response);
         alert(`Payment failed: ${response.error.description || 'Unknown error occurred'}`);
       });
-      
+
       rzp.open();
-      
+
     } catch (error) {
+      setPreparingPayment(false); // STOP loader on error
       console.error('Order creation error:', error);
-      alert('No seats available for your selected slot Plz try selecting next slot.');
+      alert('No seats available for your selected slot. Please try selecting next slot.');
     }
   };
 
@@ -391,39 +352,67 @@ function BookingForm() {
 
   const calculateTicketPrice = (age, isArmy = false) => {
     if (isArmy) return 100;
-    
+
     const ageNum = parseInt(age);
     if (ageNum >= 60) return 100;
     if (ageNum >= 5 && ageNum <= 18) return 100;
     if (ageNum > 18) return 200;
     if (ageNum < 5) return 0;
-    return 100; // Default for ages < 5
+    return 100;
   };
 
   const calculateTotalFare = () => {
     let totalBaseFare = 0;
-    
-    // Main passenger fare
+
     if (mainPassenger.age) {
       totalBaseFare += calculateTicketPrice(mainPassenger.age, mainPassenger.isArmy === 'true');
     }
-    
-    // Co-passengers fare
+
     coPassengers.forEach(passenger => {
       if (passenger.age) {
         totalBaseFare += calculateTicketPrice(passenger.age, passenger.isArmy === 'true');
       }
     });
-    
-    const total = totalBaseFare;
-    
-    return { total };
+
+    return { total: totalBaseFare };
   };
 
   const isStep1Valid = mainPassenger.name && mainPassenger.age && mainPassenger.date && mainPassenger.phone && mainPassenger.email && !dateError;
   const isStep2Valid = coPassengers.every(p => p.name && p.age);
 
   const fareDetails = calculateTotalFare();
+
+  // ** SHOW LOADER FOR POST-PAYMENT PROCESSING **
+  if (processing) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100">
+        <div className="text-center">
+          <svg className="animate-spin mx-auto h-12 w-12 text-blue-700" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+          </svg>
+          <p className="mt-4 text-lg font-semibold text-blue-900">Processing your booking…</p>
+          <p className="text-blue-700 text-sm mt-2">Please wait, don't close or go back</p>
+        </div>
+      </div>
+    );
+  }
+
+  // ** SHOW LOADER FOR PRE-PAYMENT PREPARATION **
+  if (preparingPayment) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100">
+        <div className="text-center">
+          <svg className="animate-spin mx-auto h-12 w-12 text-blue-700" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+          </svg>
+          <p className="mt-4 text-lg font-semibold text-blue-900">Preparing payment gateway…</p>
+          <p className="text-blue-700 text-sm mt-2">Setting up your booking, please wait</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
@@ -494,7 +483,7 @@ function BookingForm() {
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Travel Date <span className="text-blue-600">(Only Tuesday, Thursday, Sunday allowed)</span>
+                    Travel Date <span className="text-blue-600">(Only Tuesday, Saturday, Sunday allowed)</span>
                   </label>
                   <input
                     type="date"
@@ -510,7 +499,7 @@ function BookingForm() {
                   )}
                   <div className="mt-2 flex gap-2 text-xs">
                     <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded">Tuesday</span>
-                    <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded">Thursday</span>
+                    <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded">Saturday</span>
                     <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded">Sunday</span>
                   </div>
                 </div>
@@ -522,28 +511,27 @@ function BookingForm() {
                     onChange={(e) => handleMainPassengerChange('slot', e.target.value)}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                   >
-                    <option value="TUESDAY_EVENING">Tuesday Evening</option>
-                    <option value="THURSDAY_EVENING">Thursday Evening</option>
-                    <option value="SUNDAY_MORNING">Sunday Morning</option>
+                    <option value="TUESDAY_EVENING">TUESDAY_EVENING</option>
+                    <option value="SATURDAY_EVENING">SATURDAY_EVENING</option>
+                    <option value="SUNDAY_MORNING">SUNDAY_MORNING</option>
                   </select>
                 </div>
 
                 <div className="grid md:grid-cols-2 gap-4">
-                <div>
+                  <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
                     <input
                       type="text"
                       value={mainPassenger.phone}
                       onChange={(e) => {
                         const value = e.target.value;
-                        // Only allow digits and limit to 10 characters
                         if (/^\d*$/.test(value) && value.length <= 10) {
                           handleMainPassengerChange('phone', value);
                         }
                       }}
                       className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:border-transparent transition-all ${
-                        mainPassenger.phone && mainPassenger.phone.length !== 10 
-                          ? 'border-red-300 focus:ring-red-500' 
+                        mainPassenger.phone && mainPassenger.phone.length !== 10
+                          ? 'border-red-300 focus:ring-red-500'
                           : 'border-gray-300 focus:ring-blue-500'
                       }`}
                       placeholder="10-digit mobile number"
@@ -552,7 +540,7 @@ function BookingForm() {
                       <p className="text-red-500 text-sm mt-1">Phone number must be exactly 10 digits</p>
                     )}
                   </div>
-                   <div>
+                  <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">Email *</label>
                     <input
                       type="email"
@@ -561,7 +549,7 @@ function BookingForm() {
                       onChange={(e) => handleMainPassengerChange('email', e.target.value)}
                       className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:border-transparent transition-all ${
                         mainPassenger.email && !isValidEmail(mainPassenger.email)
-                          ? 'border-red-300 focus:ring-red-500' 
+                          ? 'border-red-300 focus:ring-red-500'
                           : 'border-gray-300 focus:ring-blue-500'
                       }`}
                       placeholder="Enter email address"
@@ -682,9 +670,9 @@ function BookingForm() {
                     </div>
                   </div>
                   <div className="bg-white rounded-lg p-4 border border-green-200">
-                     <p className="text-sm text-green-700">
-    <strong>Primary Person:</strong> {mainPassenger.name ? mainPassenger.name : 'Not Available'}
-  </p>
+                    <p className="text-sm text-green-700">
+                      <strong>Primary Person:</strong> {mainPassenger.name ? mainPassenger.name : 'Not Available'}
+                    </p>
                     <p className="text-sm text-green-700 mt-1">
                       <strong>Total Visitors:</strong> {ticketCount}
                     </p>
@@ -695,7 +683,7 @@ function BookingForm() {
                       <strong>Time Slot:</strong> {mainPassenger.slot.replace('_', ' ')}
                     </p>
                   </div>
-                  
+
                   {/* Download Ticket Button */}
                   <div className="mt-4">
                     <button
@@ -709,9 +697,8 @@ function BookingForm() {
               </div>
             )}
 
-            {/* Navigation Buttons - UPDATED with centering approach */}
+            {/* Navigation Buttons */}
             <div className={`flex mt-8 ${step === 3 ? 'justify-center' : 'justify-between'}`}>
-              {/* Only show Previous button if not on step 3 */}
               {step !== 3 && (
                 <button
                   onClick={prevStep}
@@ -743,15 +730,27 @@ function BookingForm() {
               ) : step === 2 ? (
                 <button
                   onClick={handleClickverificationforTIcketOrder}
-                  disabled={!isStep2Valid}
+                  disabled={!isStep2Valid || preparingPayment} // Disable when preparing payment
                   className={`flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-all ${
-                    !isStep2Valid
+                    !isStep2Valid || preparingPayment
                       ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
                       : 'bg-green-600 text-white hover:bg-green-700'
                   }`}
                 >
-                  Book Tickets
-                  <ArrowRight className="w-4 h-4" />
+                  {preparingPayment ? (
+                    <>
+                      <svg className="animate-spin w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+                      </svg>
+                      Preparing...
+                    </>
+                  ) : (
+                    <>
+                      Book Tickets
+                      <ArrowRight className="w-4 h-4" />
+                    </>
+                  )}
                 </button>
               ) : null}
             </div>
@@ -772,7 +771,6 @@ function BookingForm() {
                     <h3 className="text-lg font-semibold">MCMM</h3>
                     <p className="text-blue-200 text-sm">Train No: 482020</p>
                   </div>
-                   
                 </div>
                 <div className="text-right">
                   <p className="text-blue-200 text-sm">Date</p>
@@ -814,7 +812,7 @@ function BookingForm() {
               </div>
 
               <div className="space-y-3">
-                {/* Main Passenger */}
+                {/** Main Passenger */}
                 <div className="border border-gray-200 rounded-lg p-4 bg-blue-50">
                   <div className="flex items-center justify-between">
                     <div>
@@ -837,7 +835,7 @@ function BookingForm() {
                   </div>
                 </div>
 
-                {/* Co-passengers */}
+                {/** Co-passengers */}
                 {coPassengers.map((passenger, index) => (
                   <div key={index} className="border border-gray-200 rounded-lg p-4">
                     <div className="flex items-center justify-between">
@@ -862,7 +860,7 @@ function BookingForm() {
                   </div>
                 ))}
 
-                {/* Placeholder for remaining tickets */}
+                {/** Placeholder for remaining passengers */}
                 {Array(Math.max(0, ticketCount - 1 - coPassengers.length)).fill(null).map((_, index) => (
                   <div key={`placeholder-${index}`} className="border border-dashed border-gray-300 rounded-lg p-4 bg-gray-50">
                     <div className="flex items-center justify-between">
@@ -886,7 +884,7 @@ function BookingForm() {
                 <div className="flex justify-between">
                   <span className="text-gray-600">Base Fare ({ticketCount} ticket{ticketCount > 1 ? 's' : ''})</span>
                 </div>
-              
+
                 <div className="border-t border-gray-200 pt-2 mt-2">
                   <div className="flex justify-between text-lg font-bold">
                     <span>Total Amount</span>
@@ -894,7 +892,7 @@ function BookingForm() {
                   </div>
                 </div>
               </div>
-              
+
               {/* Pricing Information */}
               <div className="mt-4 p-3 bg-blue-50 rounded-lg">
                 <h4 className="text-sm font-semibold text-blue-800 mb-2">Pricing Rules:</h4>
