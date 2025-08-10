@@ -4,7 +4,7 @@ import FooterImg from "../assets/images/FooterImg.jpg";
 import React from 'react';
 
 const Footer = () => {
-  const arr = ["Attractions", "Experiences", "Destination and Events", "FAQ'S", "BLog"];
+  const arr = ["Blogs", "Cancellation_&_Refund", "Contact_US", "PrivacyPolicy", "Terms&Condition"];
 
   return (
     <div className="relative w-full min-h-[70vh]">
@@ -33,9 +33,11 @@ const Footer = () => {
             <h2 className="text-xl sm:text-2xl font-semibold mb-4">QuickLinks</h2>
             <ul>
               {arr.map((item, index) => (
+                <Link to= {item}>
                 <li key={index} className="hover:underline cursor-pointer mb-2 text-sm sm:text-base">
                   {item}
                 </li>
+                </Link>
               ))}
             </ul>
           </div>

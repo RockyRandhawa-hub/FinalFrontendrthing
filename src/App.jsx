@@ -26,10 +26,10 @@ import TermsConditionsPage from './utils/TermsConditionsPage.jsx'
         <Routes>
           <Route path="/" element={<Hero />} />
           <Route path="/blogs" element={<Blog />} />
-           <Route path="/cancellationandrefund" element={<CancellationRefundPage />} />
-           <Route path="/contactuspage" element={<ContactUsPage />} />
-           <Route path="/privacypolicy" element={<PrivacyPolicyPage />} />
-           <Route path="/termsandcondition" element={<TermsConditionsPage />} />
+           <Route path="/Cancellation_&_Refund" element={<CancellationRefundPage />} />
+           <Route path="/Contact_US" element={<ContactUsPage />} />
+           <Route path="/PrivacyPolicy" element={<PrivacyPolicyPage />} />
+           <Route path="/Terms&Condition" element={<TermsConditionsPage />} />
 
           <Route path="/booknow" element={<BookNow />} />
           <Route path="/EnterEmail" element={<BookingOne />}>
