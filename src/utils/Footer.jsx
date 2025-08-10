@@ -64,11 +64,11 @@ const Footer = () => {
 
         {/* Footer Bottom */}
         <h3 className="text-center font-semibold text-white text-sm sm:text-base">
-          <span className="inline-block">Terms of Use</span>
+         <Link to="/Terms&Condition">  <span className="inline-block">Terms of Use</span> </Link> 
           <span className="mx-1 sm:mx-2">|</span>
-          <span className="inline-block">Privacy Policy</span>
+       <Link to="/PrivacyPolicy" > <span className="inline-block">Privacy Policy</span>  </Link>   
           <span className="mx-1 sm:mx-2">|</span>
-          <span className="inline-block">Contact Us</span>
+        <Link to="/Contact_US">  <span className="inline-block">Contact Us</span> </Link> 
         </h3>
       </div>
     </div>
