@@ -65,7 +65,7 @@ const Hero = () => {
             className="w-full h-full object-cover brightness-50"
           />
 
-<div className="absolute inset-0 bg-gradient-to-b from-black/40 via-yellow-950 to-red/80 flex items-center justify-center text-center px-4">
+<div className="absolute inset-0 bg-gradient-to-b from-black/40 via-yellow-950 to-red/80   bg-black opacity-70  flex items-center justify-center text-center px-4">
             <div>
               <h1 className="text-4xl md:text-6xl font-bold mb-4 italic" style={{ fontFamily: "Kaushan" }}>
                 March into Madhya Pradesh!
