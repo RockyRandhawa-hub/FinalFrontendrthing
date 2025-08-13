@@ -420,7 +420,7 @@ function BookingForm() {
         <div className="text-center mb-8">
           <div className="flex items-center justify-center gap-3 mb-4">
             <ShipWheel className="w-8 h-8 text-blue-600" />
-            <h1 className="text-3xl font-bold text-gray-800">Heritage walk Express</h1>
+            <h1 className="text-3xl font-bold text-gray-800">Heritage Walk Express</h1>
           </div>
         </div>
 
@@ -769,7 +769,7 @@ function BookingForm() {
                   <Flag className="w-8 h-8" />
                   <div>
                     <h3 className="text-lg font-semibold">MCMM</h3>
-                    <p className="text-blue-200 text-sm">Train No: 482020</p>
+                    <p className="text-blue-200 text-sm">Heritage Express No: 482020</p>
                   </div>
                 </div>
                 <div className="text-right">
@@ -790,7 +790,7 @@ function BookingForm() {
                   <div className="border-t-2 border-dashed border-blue-200 relative">
                     <Clock className="w-4 h-4 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-blue-600" />
                   </div>
-                  <p className="text-center text-blue-200 text-sm mt-1">17h 30m</p>
+                  <p className="text-center text-blue-200 text-sm mt-1">2H 30M</p>
                 </div>
                 <div className="text-center">
                   <div className="flex items-center gap-2">

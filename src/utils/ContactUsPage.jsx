@@ -34,14 +34,14 @@ const ContactUsPage = () => {
       id: 2,
       title: "Heritage Walk Location",
       content: "MCMM Jabalpur",
-      description: "Military College & War Memorial Experience",
+      description: "4XXM+HC5, Sita Pahadi, Jabalpur, Madhya Pradesh 482001",
       icon: "🏛️",
       color: "gray"
     },
     {
       id: 3,
       title: "Email Support",
-      content: "heritage@mcmmjabalpur.in",
+      content: "heritagewalk0@gmail.com",
       description: "For detailed inquiries and group bookings",
       icon: "✉️",
       color: "green"
@@ -128,7 +128,7 @@ const ContactUsPage = () => {
 
             {/* Heritage Walk Info */}
             <div className="mt-8 p-6 rounded-xl" style={{
-              background: 'linear-gradient(135deg, #FF9933 10%, #FFFFFF 50%, #138808 90%)',
+              background: 'linear-gradient(135deg, #FF9933 10%, #FFFFFF 68%, #138808 90%)',
               boxShadow: '0 8px 25px rgba(0, 0, 0, 0.15)'
             }}>
               <h3 className="text-xl font-bold text-white mb-4 text-center">🏛️ Heritage Walk Experience</h3>

@@ -16,6 +16,16 @@ const CancellationRefundPage = () => {
       id: 3,
       text: "In case the amount is debited and the bank staff is not helping contact us at +91 6266 978 544 with your registered email address",
       color: "green"
+    },
+    {
+      id:4,
+      text: "In case the booking is successful and payment has been completed, no refund will be provided if the visitor fails to attend the event",
+      color:"orange"
+    },
+    {
+      id:5,
+      text: "If a payment fails but the amount is debited from the user's bank account, the refund will be processed automatically within 2–3 business days",
+      color: "gray"
     }
   ];
 
