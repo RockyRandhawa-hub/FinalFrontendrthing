@@ -41,6 +41,7 @@ const CancellationRefundPage = () => {
           }}>
             Cancellation and Refund
           </h1>
+          <h2 className="text-black-800 bold"> Military College Of Material Management </h2> 
           <p className="text-xl text-gray-600 font-light">
             Payment Policy Guidelines
           </p>
