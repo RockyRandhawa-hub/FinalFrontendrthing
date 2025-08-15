@@ -202,7 +202,7 @@ function BookingForm() {
       doc.setTextColor(255, 255, 255);
       doc.setFontSize(6);
       doc.text('VERIFIED', circleX, circleY - 1.5, { align: 'center' });
-      doc.text('BY MCME', circleX, circleY + 3.5, { align: 'center' });
+      doc.text('BY MCMM', circleX, circleY + 3.5, { align: 'center' });
 
       doc.save(`Heritage_Walk_Ticket_${mainPassenger.name.replace(/\s+/g, '_')}.pdf`);
     } catch (err) {
