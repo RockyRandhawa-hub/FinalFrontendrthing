@@ -45,7 +45,7 @@ const AdminLogin = () => {
 
     try {
         
-      const response = await axios.post('http://localhost:8080/api/v1/admin/loginAdmin', {
+      const response = await axios.post('https://royanheritage.onrender.com/api/v1/admin/loginAdmin', {
         email: credentials.username,
         password: credentials.password
       },{withCredentials:true});

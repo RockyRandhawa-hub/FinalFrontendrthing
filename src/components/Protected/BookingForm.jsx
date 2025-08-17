@@ -36,7 +36,7 @@ useEffect(() => {
       setProcessing(true);
       
       try {
-        const verifyRes = await fetch('http://localhost:8080/api/v1/payment/verify', {
+        const verifyRes = await fetch('https://royanheritage.onrender.com/api/v1/payment/verify', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -417,7 +417,7 @@ useEffect(() => {
 
       setTickets(ticketsArray);
 
-      const res = await fetch('http://localhost:8080/api/v1/payment/createorder', {
+      const res = await fetch('https://royanheritage.onrender.com/api/v1/payment/createorder', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
