@@ -16,7 +16,7 @@ const AdminPanel = ({ user }) => {
 useEffect(() => {
   const fetchVisitorsData = async () => {
     try {
-      const res = await axios.get("https://royanheritage.onrender.com/api/v1/admin/getTheData");
+      const res = await axios.get("http://localhost:8080/api/v1/admin/getTheData");
       // Defensive: always use array
       const arr = Array.isArray(res?.data) ? res.data : [];
        console.log('API res:', res);
