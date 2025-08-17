@@ -17,6 +17,7 @@ import CancellationRefundPage from './utils/CancellationRefundPage.jsx'
 import ContactUsPage from './utils/ContactUsPage.jsx'
 import PrivacyPolicyPage from './utils/PrivacyPolicyPage.jsx'
 import TermsConditionsPage from './utils/TermsConditionsPage.jsx'
+import EmailOtpVerification from './utils/EmailOtpVerification.jsx'
   export default function App() {
     return (
       <>
@@ -32,11 +33,10 @@ import TermsConditionsPage from './utils/TermsConditionsPage.jsx'
            <Route path="/Terms&Condition" element={<TermsConditionsPage />} />
 
           <Route path="/booknow" element={<BookNow />} />
-          <Route path="/EnterEmail" element={<BookingOne />}>
-            <Route path="BookingDetails" element={<BookingDetails />} >
-              <Route path="BookingForm" element={<BookingForm />} />
-            </Route>
-          </Route>
+         
+          <Route path="/EnterEmail" element={<EmailOtpVerification />} />
+
+<Route path="/EnterEmail/BookingForm" element={<BookingForm />} />   
           
           <Route path="heritage/admin/login/protected" element={<AdminLogin />} />
           <Route path="heritage/admin/login/protected/adminPannel" element={<AdminPanel />} />
