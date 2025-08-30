@@ -13,7 +13,7 @@ const LiveCounter = () => {
     try {
       setIsLoading(true);
       // Replace with your actual API endpoint
-      const response = await fetch("http://localhost:8080/api/v1/admin/getcount");
+      const response = await fetch("https://royanheritage.onrender.com/api/v1/admin/getcount");
       const data = await response.json();
       
       if (data.success) {
