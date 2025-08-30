@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,  useEffect } from 'react';
 import heroImageL from '../assets/images/heroImageL.jpg';
 import AdventureBackGround from '../assets/images/AdventureBackGround.jpg';
 import Logo from '../assets/icons/Logo.png';
@@ -13,10 +13,14 @@ import WarMemorial from '../assets/images/WarMemorial.jpg'
 import Missiles from '../assets/images/Missiles.jpg'
 import { X, Play } from 'lucide-react';
 import Stick from '../assets/images/Stick.jpg'
+import axios from 'axios';
+import LiveCounter from './LiveCounter';
 
 const Hero = () => {
   // Video modal state
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+ 
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
@@ -178,7 +182,7 @@ const Hero = () => {
           {/* <HeritageTrails /> */}
         </div>
       </div>
-
+              <LiveCounter />
       {/* YouTube Video Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-80 backdrop-blur-md transition-opacity duration-500" onClick={closeModal}>
