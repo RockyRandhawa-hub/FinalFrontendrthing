@@ -542,9 +542,9 @@ useEffect(() => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 sm:mt-20%">
       <div className="container mx-auto px-4 py-8">
-        <div className="text-center mb-8">
+        <div className="text-center mb-8 mt-108px">
           <div className="flex items-center justify-center gap-3 mb-4">
             <ShipWheel className="w-8 h-8 text-blue-600" />
             <h1 className="text-3xl font-bold text-gray-800">Heritage Walk Express</h1>

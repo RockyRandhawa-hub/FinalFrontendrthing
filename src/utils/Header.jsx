@@ -13,7 +13,7 @@ const Header = () => {
     { name: 'Home', href: '/' },
     { name: 'Blog', href: '/blogs' },
     { name: 'About-us', href: '/booknow' },
-    { name: 'Plan your Trip', href: '/EnterEmail' }
+    { name: 'Plan your Trip', href: '/EnterEmail/BookingForm' }
   ];
     
   return (
