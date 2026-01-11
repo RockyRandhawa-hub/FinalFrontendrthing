@@ -48,7 +48,7 @@ const Footer = () => {
             <p className="mb-4 text-sm sm:text-base lg:text-justify">
               Entry is subject to valid ID verification and adherence to the <br className="hidden lg:block" /> dress code and visitor guidelines.
             </p>
-            <Link to="/EnterEmail">
+            <Link to="/EnterEmail/BookingForm">
             <button
               className="bg-green-600 text-white font-bold px-6 py-3 sm:px-8 sm:py-4 lg:px-6 lg:py-3 rounded-full hover:bg-green-700 transition-colors text-sm sm:text-base"
               style={{ fontFamily: "Roboto" }}
